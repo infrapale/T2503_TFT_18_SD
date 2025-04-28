@@ -20,18 +20,6 @@
 #include <SPI.h>
 
 
-// For the breakout, you can use any 2 or 3 pins
-// These pins will also work for the 1.8" TFT shield
-#define TFT_CS     17
-#define TFT_RST    14  // you can also connect this to the Arduino reset
-                      // in which case, set this #define pin to 0!
-#define TFT_DC     13
-
-//Adafruit_ST7735 tft = Adafruit_ST7735(TFT_CS,  TFT_DC, TFT_RST);
-// Option 2: use any pins but a little slower!
-#define TFT_SCLK 13   // set these to be whatever pins you like!
-#define TFT_MOSI 11   // set these to be whatever pins you like!
-//Adafruit_ST7735 tft = Adafruit_ST7735(TFT_CS, TFT_DC, TFT_MOSI, TFT_SCLK, TFT_RST);
 
 #define TFT_WIDTH    160
 #define TFT_HEIGHT   128
@@ -58,7 +46,7 @@ box_st box[BOX_NBR_OF];
 
 void tftx_initialize(void)
 {
-  for (uint8_t i = 0; i <= BOX_NBR_OF; i++)
+  for (uint8_t i = 0; i < BOX_NBR_OF; i++)
   {
     box[i].update = true;
   }

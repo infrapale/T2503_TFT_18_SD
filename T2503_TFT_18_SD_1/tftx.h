@@ -7,17 +7,18 @@
 #include <Adafruit_ST7735.h> // Hardware-specific library
 #include <SPI.h>
 
+
 // For the breakout, you can use any 2 or 3 pins
 // These pins will also work for the 1.8" TFT shield
 #define TFT_CS     17
-#define TFT_RST    14  // you can also connect this to the Arduino reset
+#define TFT_RST    7  // you can also connect this to the Arduino reset
                       // in which case, set this #define pin to 0!
-#define TFT_DC     13
+#define TFT_DC     10
 
 //Adafruit_ST7735 tft = Adafruit_ST7735(TFT_CS,  TFT_DC, TFT_RST);
 // Option 2: use any pins but a little slower!
-#define TFT_SCLK 13   // set these to be whatever pins you like!
-#define TFT_MOSI 11   // set these to be whatever pins you like!
+#define TFT_SCLK 18   // set these to be whatever pins you like!
+#define TFT_MOSI 19   // set these to be whatever pins you like!
 //Adafruit_ST7735 tft = Adafruit_ST7735(TFT_CS, TFT_DC, TFT_MOSI, TFT_SCLK, TFT_RST);
 
 typedef enum
