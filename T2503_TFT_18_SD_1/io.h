@@ -6,6 +6,13 @@
 #define PIN_WIRE_SDA        (12u)
 #define PIN_WIRE_SCL        (13u)
 
+#define PIN_UART0_TX        (0u)
+#define PIN_UART0_RX        (1u)
+#define PIN_UART1_TX        (8u)
+#define PIN_UART1_RX        (9u)
+
+
+
 #define PIN_TFT_CS          (17u)
 #define PIN_TFT_RST         (7u)  
 #define PIN_TFT_DC          (10u)
@@ -18,7 +25,6 @@
 #define PIN_KEY3		        (11u)
 #define PIN_LDR             (26u)
 #define PIN_PIR             (27u)
-#define PIN_
 
 
 void io_initialize(void);

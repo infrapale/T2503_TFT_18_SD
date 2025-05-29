@@ -1,4 +1,5 @@
 #ifndef __MAIN_H__
+
 #define __MAIN_H__
 
 
@@ -17,8 +18,6 @@
 
 #define APP_NAME   "T2503_TFT_19_SD"
 #define MAIN_TITLE "Villa Astrid Console"
-
-
 
 typedef struct date_time
 {

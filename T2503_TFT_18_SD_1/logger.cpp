@@ -52,15 +52,15 @@ void logger_initialize(void)
     Serial.println(F("Note: press reset button on the board and reopen this Serial Monitor after fixing your issue!"));
     logger.sd_ok = false;
     logger_handle.state = 0;
+    logger.do_log = false;
   }
   else
   {
       logger.sd_ok = true;
-      logger.do_log = false;
+      logger.do_log = true;
       logger.task_indx = atask_add_new(&logger_handle);
       Serial.println(F("initialization done."));
       logger_handle.state = 10;
-      atask_add_new(&logger_handle);
   }
 }
 
@@ -78,7 +78,7 @@ void logger_task() {
   {
       //logger.do_log = false;
  
-      // strncpy(logger.file_name,"log-",4);
+      strncpy(logger.file_name,"log_dir",8);
       //rtc_time_get_date_str(&logger.file_name[0]);
       strcat(logger.file_name,".txt");
       //strncpy(logger.file_name,"L_250210.txt",12);
@@ -87,6 +87,7 @@ void logger_task() {
       // if the file is available, write to it:
       if (dataFile) 
       {
+        dataFile.printf("millis = %d\n", millis());
         dataFile.close();
       }
       // if the file isn't open, pop up an error:
