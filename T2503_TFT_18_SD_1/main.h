@@ -29,4 +29,18 @@ typedef struct date_time
     uint8_t   second;
  } date_time_st;
 
+typedef struct 
+{
+    uint8_t     power;
+    uint8_t     my_addr;
+    uint8_t     base_addr;
+    uint16_t    frequency;
+    uint8_t     spreading_factor;
+    uint16_t    my_counter;
+    uint16_t    base_counter;
+    uint16_t    interval;
+    uint16_t    ival_cntr;
+
+} lora_st;
+
 #endif

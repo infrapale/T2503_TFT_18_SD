@@ -10,7 +10,20 @@ https://randomnerdtutorials.com/guide-to-1-8-tft-display-with-arduino/
 #include "dashboard.h"
 #include "logger.h"
 #include "menu.h"
+#include "lora.h"
 
+lora_st lora = 
+{
+    .power            = 14,
+    .my_addr          = 1,
+    .base_addr        = 2,
+    .frequency        = 868,
+    .spreading_factor = 12,
+    .my_counter       = 0,
+    .base_counter     = 0,
+    .interval         = 10,
+    .ival_cntr        = 0
+};
 void print_debug_task(void);
 
 //                                  123456789012345   ival  next  state  prev  cntr flag  call backup
@@ -41,6 +54,7 @@ void setup(void)
   dashboard_initialize();
   dashboard_start_task();
   menu_initialize();
+  lora_initialize();
   tftx_update_boxes();
 }
 

@@ -6,8 +6,11 @@
 #include "dashboard.h"
 #include "tftx.h"
 #define NBR_MENU_KEYS  4
-#define NBR_RADIO_PWR  4
+#define NBR_RADIO_PWR  5
+#define NBR_INTERVAL   5
 
+
+extern lora_st lora;
 void dummy_cb()
 {
    // 
@@ -27,6 +30,7 @@ typedef struct
     uint8_t active;
     uint8_t mode_indx;
     uint8_t pwr_indx;
+    uint8_t ival_indx;
 } menu_ctrl_st;
 
 
@@ -36,7 +40,9 @@ void menu_test1(void)
 }
 
 menu_ctrl_st menu_ctrl = {ATASK_NOT_DEFINED,  MENU_MAIN, MODE_REMOTE, 0};
-uint8_t radio_pwr[NBR_RADIO_PWR] = {5,10,14,20};
+
+uint8_t radio_pwr[NBR_RADIO_PWR] = {4,10,14,18,20};
+uint8_t send_ival[NBR_INTERVAL]  = {5,10,20,30,60};
 char    mode_txt[MODE_NBR_OF][8] = {"Remote","Base","Relay"};
 
 
@@ -48,6 +54,24 @@ void menu_next_mode(void)
 void menu_next_pwr(void)
 {
   if(++menu_ctrl.pwr_indx >= NBR_RADIO_PWR )  menu_ctrl.pwr_indx = 0;
+  lora.power = radio_pwr[menu_ctrl.pwr_indx];
+}
+
+void menu_next_interval(void)
+{
+  if(++menu_ctrl.ival_indx >= NBR_INTERVAL )  menu_ctrl.ival_indx = 0;
+  lora.interval = send_ival[menu_ctrl.ival_indx];
+}
+
+void menu_pwr_down(void)
+{
+  if(menu_ctrl.pwr_indx >= 0 )  menu_ctrl.pwr_indx++;
+  lora.power = radio_pwr[menu_ctrl.pwr_indx];
+}
+
+void menu_clr_cntr(void)
+{
+  lora.my_counter = 0;
 }
 
 menu_row_st menu[MENU_NBR_OF] =
@@ -56,18 +80,47 @@ menu_row_st menu[MENU_NBR_OF] =
   {
     "Main Menu", 
     {
-      {"Main",MENU_MAIN, dummy_cb },
-      {"Next Mode",MENU_MAIN, menu_next_mode },
-      {"Settings", MENU_SETTINGS, menu_next_pwr},
+      {"Function", MENU_SET_POWER, dummy_cb },
+      {"Start   ", MENU_MAIN, menu_next_mode },
+      {"Stop    ", MENU_SETTINGS, menu_next_pwr},
     }
   },
+  [MENU_SET_POWER] =
+  {
+    "Set Power", 
+    {
+      {"Function",  MENU_CLR_CNTR, dummy_cb },
+      {"Back    ",  MENU_MAIN, dummy_cb},
+      {"Power++",   MENU_SET_POWER, menu_next_pwr},
+    }
+  },
+  [MENU_CLR_CNTR] =
+  {
+    "Clear Counter", 
+    {
+      {"Function",  MENU_SET_INTERVAL, dummy_cb },
+      {"Back    ",  MENU_MAIN, dummy_cb},
+      {"Clear   ",  MENU_CLR_CNTR, menu_clr_cntr},
+    }
+  },
+
+  [MENU_SET_INTERVAL] =
+  {
+    "Set Interval", 
+    {
+      {"Function",  MENU_MAIN, dummy_cb },
+      {"Back    ",  MENU_MAIN, dummy_cb},
+      {"Ival++  ",  MENU_SET_INTERVAL, menu_next_interval},
+    }
+  },
+    
   [MENU_SET_MODE] =
   {
     "Set Mode", 
     {
-      {"Remote",  MENU_MAIN, dummy_cb },
-      {"Base",    MENU_MAIN, dummy_cb},
-      {"Relay",   MENU_MAIN, dummy_cb},
+      {"Function",  MENU_MAIN, dummy_cb },
+      {"Back    ",      MENU_MAIN, dummy_cb},
+      {"Mode    ",      MENU_MAIN, dummy_cb},
     }
   },
   [MENU_SETTINGS] =
@@ -136,12 +189,13 @@ void menu_update(void)
 
     for (uint8_t i = 0; i < MENU_BTN_NBR_OF; i++)
     {
-        dashboard_set_menu_text(i-1, menu[menu_ctrl.active].menu_item[i].label);
+        dashboard_set_menu_text(i, menu[menu_ctrl.active].menu_item[i].label);
     }
 
-    sprintf(txt,"%s  Pwr %d dB",
+    sprintf(txt,"%s  Pwr %ddB #%d",
         mode_txt[menu_ctrl.mode_indx],
-        radio_pwr[menu_ctrl.pwr_indx]
+        radio_pwr[menu_ctrl.pwr_indx],
+        lora.my_counter
     );
     dashboard_set_row_text(1, txt);
 

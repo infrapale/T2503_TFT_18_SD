@@ -11,6 +11,9 @@ typedef void (*menu_function_cb)(void);
 typedef enum  
 {
     MENU_MAIN = 0,
+    MENU_SET_POWER,
+    MENU_CLR_CNTR,
+    MENU_SET_INTERVAL,
     MENU_SET_MODE,
     MENU_SETTINGS,
     MENU_RESERVED,
