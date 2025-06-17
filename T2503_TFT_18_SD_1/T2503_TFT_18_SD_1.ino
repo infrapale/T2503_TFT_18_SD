@@ -40,8 +40,7 @@ void setup(void)
   Serial1.begin(9600);
   Serial2.begin(9600);
 
-  Serial.begin(9600); 
-  while(!Serial){}
+  //while(!Serial){}
   delay(2000);
   Serial.print("T2503_TFT_18_SD"); Serial.print(" Compiled: ");
   Serial.print(__DATE__); Serial.print(" ");
@@ -72,7 +71,7 @@ void print_debug_task(void)
 {
   atask_print_status(true);
   Serial.printf("LDR= %d  PIR = %d\n", io_read_ldr(), io_read_pir());
-  Serial1.println("Print to UART0 TX ");
+  //Serial1.println("Print to UART0 TX ");
   if (Serial1.available())
   {
       String  rx_str;

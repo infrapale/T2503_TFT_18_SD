@@ -30,6 +30,25 @@ void lora_send_msg(void)
       lora.base_counter);
    Serial.println(buff);   
    Serial1.println(buff);   
+   //Serial1.println("ABC");
+}
+
+void lora_receive_msg(void)
+{
+   String Str;
+    if (Serial1.available())
+    {
+        Serial.println("Message from base is available");
+        Str = Serial1.readStringUntil('>');
+        if (Str.length()> 0)
+        {
+            //rx_msg.avail = true;
+            //rx_msg.str.remove(rx_msg.str.length()-1);
+            //Serial1.println(rx_msg.str);
+            //status = STATUS_AVAILABLE;
+            Serial.println(Str);
+        }
+    } 
 
 }
 
@@ -42,5 +61,7 @@ void lora_task(void)
       Serial.printf("Cntr = %d\n", lora.ival_cntr);
       menu_update();
       lora_send_msg();
+      delay(100);
+      lora_receive_msg();
    }
 }
