@@ -70,14 +70,14 @@ void loop() {
 void print_debug_task(void)
 {
   atask_print_status(true);
-  Serial.printf("LDR= %d  PIR = %d\n", io_read_ldr(), io_read_pir());
+  //Serial.printf("LDR= %d  PIR = %d\n", io_read_ldr(), io_read_pir());
   //Serial1.println("Print to UART0 TX ");
-  if (Serial1.available())
-  {
-      String  rx_str;
-      rx_str = Serial1.readStringUntil('\n');
-      Serial.println(rx_str);
-  }
+  // if (Serial1.available())
+  // {
+  //     String  rx_str;
+  //     rx_str = Serial1.readStringUntil('\n');
+  //     Serial.println(rx_str);
+  // }
 }
 
 
