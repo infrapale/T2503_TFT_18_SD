@@ -85,12 +85,12 @@ int16_t font_voffs[FONT_NBR_OF] =
   [FONT_STANDARD] = 5,
   [FONT_SANS_9] = 12,
   [FONT_SANS_12] = 22,
-  [FONT_SANS_18] = 28,
+  [FONT_SANS_18] = 34,
   [FONT_SANS_24] = 40,
   [FONT_SANS_BOLD_9] = 12,
   [FONT_SANS_BOLD_12] = 22,
-  [FONT_SANS_BOLD_18] = 18,
-  [FONT_SANS_BOLD_24] = 24,
+  [FONT_SANS_BOLD_18] = 34,
+  [FONT_SANS_BOLD_24] = 40,
   [FONT_72x53RLE] = 40
 };
 

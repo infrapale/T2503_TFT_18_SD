@@ -22,7 +22,8 @@ lora_st lora =
     .my_counter       = 0,
     .base_counter     = 0,
     .interval         = 10,
-    .ival_cntr        = 0
+    .ival_cntr        = 0,
+    .my_rssi          = 0
 };
 void print_debug_task(void);
 

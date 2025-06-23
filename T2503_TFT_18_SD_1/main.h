@@ -40,7 +40,7 @@ typedef struct
     uint16_t    base_counter;
     uint16_t    interval;
     uint16_t    ival_cntr;
-
+    int         my_rssi;
 } lora_st;
 
 #endif

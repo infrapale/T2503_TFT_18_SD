@@ -89,9 +89,9 @@ void dashboard_initialize(void)
     mid_box.active = false;
     mid_box.update = true;
     mid_box.x = 0;
-    mid_box.y = row_box[2].y;
+    mid_box.y = row_box[3].y;
     mid_box.w = tftx_get_width();
-    mid_box.h = row_box[0].h * 4;
+    mid_box.h = row_box[0].h * 3;
     mid_box.frame = COLOR_YELLOW;
     mid_box.fill =  COLOR_DARK_GREY;
     mid_box.font = FONT_SANS_24;
@@ -106,6 +106,18 @@ void dashboard_set_row_text(uint8_t row, char *txt)
     tftx_set_text(&row_box[row], txt);
 }
 
+void dashboard_set_mid_text(char *txt)
+{
+    tftx_set_text(&mid_box, txt);
+}
+void dashboard_set_mid_color(uint16_t color)
+{
+   mid_box.txt_color = color;
+}
+void dashboard_set_mid_font(font_et font)
+{
+    mid_box.font = font;
+}
 
 void dashboard_set_menu_label(char *label)
 {
