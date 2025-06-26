@@ -1,7 +1,14 @@
-/**
+/*******************************************************************************
 https://randomnerdtutorials.com/guide-to-1-8-tft-display-with-arduino/
-
-**/
+********************************************************************************
+Required non-arduino Libraries:
+  https://github.com/infrapale/Pin_Button
+  https://github.com/infrapale/T2409_atask
+********************************************************************************
+LoRa MCU Code:
+  https://github.com/infrapale/T2505_RFM95_Test   .._Test4  !!!
+  
+*******************************************************************************/
 
 #include <SPI.h>
 #include "main.h"
@@ -14,6 +21,7 @@ https://randomnerdtutorials.com/guide-to-1-8-tft-display-with-arduino/
 
 lora_st lora = 
 {
+    .role             = NODE_ROLE_UNDEFINED,
     .power            = 14,
     .my_addr          = 1,
     .base_addr        = 2,
@@ -43,7 +51,7 @@ void setup(void)
 
   //while(!Serial){}
   delay(2000);
-  Serial.print("T2503_TFT_18_SD"); Serial.print(" Compiled: ");
+  Serial.print(APP_NAME); Serial.print(" Compiled: ");
   Serial.print(__DATE__); Serial.print(" ");
   Serial.print(__TIME__); Serial.println();
   io_initialize();

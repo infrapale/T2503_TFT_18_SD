@@ -16,8 +16,17 @@
 #define UNIT_LABEL_LEN      10
 #define MEASURE_LABEL_LEN   16
 
-#define APP_NAME   "T2503_TFT_19_SD"
+#define APP_NAME   "T2503_TFT_18_SD"
 #define MAIN_TITLE "Villa Astrid Console"
+
+typedef enum
+{
+    NODE_ROLE_UNDEFINED = 0,
+    NODE_ROLE_CLIENT,
+    NODE_ROLE_SERVER,
+    NODE_ROLE_NBR_OF
+} node_role_et;
+
 
 typedef struct date_time
 {
@@ -31,16 +40,17 @@ typedef struct date_time
 
 typedef struct 
 {
-    uint8_t     power;
-    uint8_t     my_addr;
-    uint8_t     base_addr;
-    uint16_t    frequency;
-    uint8_t     spreading_factor;
-    uint16_t    my_counter;
-    uint16_t    base_counter;
-    uint16_t    interval;
-    uint16_t    ival_cntr;
-    int         my_rssi;
+    node_role_et    role;
+    uint8_t         power;
+    uint8_t         my_addr;
+    uint8_t         base_addr;
+    uint16_t        frequency;
+    uint8_t         spreading_factor;
+    uint16_t        my_counter;
+    uint16_t        base_counter;
+    uint16_t        interval;
+    uint16_t        ival_cntr;
+    int             my_rssi;
 } lora_st;
 
 #endif

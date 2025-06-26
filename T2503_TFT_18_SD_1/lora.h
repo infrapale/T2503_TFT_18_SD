@@ -30,6 +30,9 @@ typedef enum
   CMD_SET_SF,
   CMD_RADIO_REPLY,
   CMD_GET_RSSI,
+  CMD_GET_ROLE,
+  CMD_GET_MSG,
+  CMD_GET_CNTR,
   CMD_NBR_OF
 } cmd_et;
 
@@ -109,5 +112,7 @@ typedef struct
 
 
 void lora_initialize(void);
+
+void lora_set_power(uint8_t pwr);
 
 #endif

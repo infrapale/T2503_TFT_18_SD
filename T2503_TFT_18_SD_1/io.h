@@ -26,11 +26,15 @@
 #define PIN_LDR             (26u)
 #define PIN_PIR             (27u)
 
+#define PIN_CLR             (21u)
+
 
 void io_initialize(void);
 
 uint16_t io_read_ldr(void);
 
 bool io_read_pir(void);
+
+void io_ext_clr(bool clr);
 
 #endif

@@ -5,6 +5,8 @@
 #include "BtnPinOnOff.h"
 #include "dashboard.h"
 #include "tftx.h"
+#include "lora.h"
+
 #define NBR_MENU_KEYS  4
 #define NBR_RADIO_PWR  5
 #define NBR_INTERVAL   5
@@ -55,6 +57,7 @@ void menu_next_pwr(void)
 {
   if(++menu_ctrl.pwr_indx >= NBR_RADIO_PWR )  menu_ctrl.pwr_indx = 0;
   lora.power = radio_pwr[menu_ctrl.pwr_indx];
+  lora_set_power(lora.power);
 }
 
 void menu_next_interval(void)
@@ -192,10 +195,9 @@ void menu_update(void)
         dashboard_set_menu_text(i, menu[menu_ctrl.active].menu_item[i].label);
     }
 
-    sprintf(txt,"%s  Pwr %ddB #%d",
-        mode_txt[menu_ctrl.mode_indx],
-        radio_pwr[menu_ctrl.pwr_indx],
-        lora.my_counter
+    sprintf(txt,"%s  Pwr %ddB",
+        mode_txt[lora.role],
+        radio_pwr[menu_ctrl.pwr_indx]
     );
     dashboard_set_row_text(1, txt);
 
