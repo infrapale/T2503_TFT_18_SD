@@ -51,6 +51,7 @@ typedef struct
     uint16_t        interval;
     uint16_t        ival_cntr;
     int             my_rssi;
+    uint8_t         modem_conf_indx;
 } lora_st;
 
 #endif

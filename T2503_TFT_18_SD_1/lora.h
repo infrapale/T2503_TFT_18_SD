@@ -2,8 +2,9 @@
 #define __LORA_H__
 
 
-#define CMD_TAG_LEN     5
-#define CMD_MAX_VALUES  10
+#define CMD_TAG_LEN         5
+#define CMD_MAX_VALUES      10
+#define NBR_OF_MODEM_CONF   5
 
 typedef enum
 {
@@ -114,5 +115,8 @@ typedef struct
 void lora_initialize(void);
 
 void lora_set_power(uint8_t pwr);
+
+void lora_set_modem_conf(uint8_t modem_conf_indx);
+
 
 #endif

@@ -8,7 +8,7 @@
 #include "lora.h"
 
 #define NBR_MENU_KEYS  4
-#define NBR_RADIO_PWR  5
+#define NBR_RADIO_PWR  6
 #define NBR_INTERVAL   5
 
 
@@ -33,6 +33,7 @@ typedef struct
     uint8_t mode_indx;
     uint8_t pwr_indx;
     uint8_t ival_indx;
+    uint8_t modem_conf_indx;
 } menu_ctrl_st;
 
 
@@ -43,9 +44,18 @@ void menu_test1(void)
 
 menu_ctrl_st menu_ctrl = {ATASK_NOT_DEFINED,  MENU_MAIN, MODE_REMOTE, 0};
 
-uint8_t radio_pwr[NBR_RADIO_PWR] = {4,10,14,18,20};
+uint8_t radio_pwr[NBR_RADIO_PWR] = {2,4,8,10,14,15};
 uint8_t send_ival[NBR_INTERVAL]  = {5,10,20,30,60};
 char    mode_txt[MODE_NBR_OF][8] = {"Remote","Base","Relay"};
+
+char    modem_conf_label[NBR_OF_MODEM_CONF][17] =
+{ // 1234567890123456
+	  "Bw125Cr45Sf128  ",    ///< Bw = 125 kHz, Cr = 4/5, Sf = 128chips/symbol, CRC on. Default medium range
+	  "Bw500Cr45Sf128  ",    ///< Bw = 500 kHz, Cr = 4/5, Sf = 128chips/symbol, CRC on. Fast+short range
+	  "Bw31_25Cr48Sf512",	   ///< Bw = 31.25 kHz, Cr = 4/8, Sf = 512chips/symbol, CRC on. Slow+long range
+	  "Bw125Cr48Sf4096 ",    ///< Bw = 125 kHz, Cr = 4/8, Sf = 4096chips/symbol, low data rate, CRC on. Slow+long range
+	  "Bw125Cr45Sf2048 "     ///< Bw = 125 kHz, Cr = 4/5, Sf = 2048chips/symbol, CRC on. Slow+long range 
+};
 
 
 void menu_next_mode(void)
@@ -66,11 +76,19 @@ void menu_next_interval(void)
   lora.interval = send_ival[menu_ctrl.ival_indx];
 }
 
+void menu_next_modem_conf(void)
+{
+  if(++menu_ctrl.modem_conf_indx >= NBR_OF_MODEM_CONF )  menu_ctrl.modem_conf_indx = 0;
+  lora_set_modem_conf( menu_ctrl.modem_conf_indx);
+}
+
+
 void menu_pwr_down(void)
 {
   if(menu_ctrl.pwr_indx >= 0 )  menu_ctrl.pwr_indx++;
   lora.power = radio_pwr[menu_ctrl.pwr_indx];
 }
+
 
 void menu_clr_cntr(void)
 {
@@ -83,9 +101,9 @@ menu_row_st menu[MENU_NBR_OF] =
   {
     "Main Menu", 
     {
-      {"Function", MENU_SET_POWER, dummy_cb },
-      {"Start   ", MENU_MAIN, menu_next_mode },
-      {"Stop    ", MENU_SETTINGS, menu_next_pwr},
+      {"Option  ", MENU_SETTINGS, dummy_cb},
+      {"Power   ", MENU_MAIN, menu_next_pwr },
+      {"Conf    ", MENU_MAIN, menu_next_modem_conf},
     }
   },
   [MENU_SET_POWER] =
@@ -195,11 +213,17 @@ void menu_update(void)
         dashboard_set_menu_text(i, menu[menu_ctrl.active].menu_item[i].label);
     }
 
-    sprintf(txt,"%s  Pwr %ddB",
-        mode_txt[lora.role],
+    sprintf(txt,"%s Pwr %ddB",
+        modem_conf_label[lora.modem_conf_indx],
         radio_pwr[menu_ctrl.pwr_indx]
     );
     dashboard_set_row_text(1, txt);
+    
+    sprintf(txt,"%s - %s",
+        APP_NAME,
+        mode_txt[lora.role]
+    );
+    dashboard_set_row_text(0, txt);
 
 
 

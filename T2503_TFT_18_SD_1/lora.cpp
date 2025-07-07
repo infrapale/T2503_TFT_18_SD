@@ -187,6 +187,12 @@ void lora_set_power(uint8_t pwr)
    Serial1.printf("<SPWR;%d>\n",pwr);   
 }
 
+void lora_set_modem_conf(uint8_t modem_conf_indx)
+{
+   lora.modem_conf_indx =  modem_conf_indx;
+   Serial1.printf("<SMCF;%d>\n",modem_conf_indx);   
+}
+
 
 void lora_request_rssi(void)
 {

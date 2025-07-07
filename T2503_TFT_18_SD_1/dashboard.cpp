@@ -132,9 +132,9 @@ void dashboard_set_menu_text(uint8_t mindx, char *label)
 
 void dashboard_show_info(void)
 {
-    char txt[40];
-    sprintf(txt, "%s", APP_NAME);
-    tftx_set_text(&row_box[0], txt);
+    //char txt[40];
+    //sprintf(txt, "%s", APP_NAME);
+    //tftx_set_text(&row_box[0], txt);
     //sprintf(txt, "%s %s", __DATE__, __TIME__);
     //tftx_set_text(&row_box[1], txt); 
 }
